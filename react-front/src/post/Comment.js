@@ -123,7 +123,7 @@ class Comment extends Component {
                                     <Link to={`/user/${posterProfile}`}> 
                                         <img 
                                             className="float-left mr-2" 
-                                            style={{height: "30px", width: "auto", borderRadius: "50%"}}
+                                            style={{height: "30px", width: "30px", borderRadius: "50%"}}
                                             src={`${process.env.REACT_APP_API_URL}/user/photo/${posterId}`} 
                                             alt={posterName} 
                                             onError={i => (i.target.src = `${DefaultProfile}`)}  
@@ -133,7 +133,7 @@ class Comment extends Component {
                                     <div>
                                         <p className="lead">{comment.text}</p>
                                         <p className="font-italic mark bg-light">
-                                            Posted By: <Link to={`/user/${posterProfile}`}>{posterName}{" "}</Link>
+                                            Posted By: <Link to={`${posterProfile}`}>{posterName}{" "}</Link>
                                             on {new Date(comment.created).toDateString()}
                                             {console.log(isAuthenticated().user._id, " ", posterId)};
                                             <span>
