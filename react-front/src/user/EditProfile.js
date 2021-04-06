@@ -78,7 +78,7 @@ class EditProfile extends Component {
         
         if (fileSize > 250000)      // 100KB
         {
-            this.setState({error: "File size should be less 200KB"});
+            this.setState({error: "File size should be less 200KB", imagePath: ""});
             return false;
         }
         
