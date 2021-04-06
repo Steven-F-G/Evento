@@ -15,8 +15,8 @@ const Home = () => (
 
                     <div style={{display: "inline"}}>
                         
-                    <h1>Home Page</h1>
-                    <h3 className="lead ml-2">Welcome to Evento</h3>
+                    <h1>Welcome to Evento</h1>
+                    
                     </div>
                 
                 </center>
