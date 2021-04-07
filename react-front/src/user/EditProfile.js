@@ -63,10 +63,11 @@ class EditProfile extends Component {
         else if (name === "photo")
         {
             this.setState({ defaultImage: false, imagePath: URL.createObjectURL(event.target.files[0])});
+            const fileSize = event.target.files[0].size;
+            this.setState({fileSize});     
             
         }
 
-        const fileSize = name === "photo" ? event.target.files[0].size : 0;
         this.userData.set(name, value);
         this.setState({ [name]: value, fileSize, error: "" });
     };
