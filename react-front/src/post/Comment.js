@@ -7,7 +7,8 @@ import DefaultProfile from '../images/avatar.png';
 class Comment extends Component {
     state = {
         text: "",
-        error: ""
+        error: "",
+        loading: "false",
     }
 
     handleChange = event => {
@@ -37,7 +38,9 @@ class Comment extends Component {
             return false;
         }
         
+        this.setState({loading: true});
 
+        
         if (this.isValid())
         {
             const token = isAuthenticated().token;
@@ -52,7 +55,7 @@ class Comment extends Component {
                 }
                 else
                 {
-                    this.setState({text: ''})
+                    this.setState({text: '', loading: false})
                     // dispatch fresh list of comments to parent component (SinglePost)
                     this.props.updateComments(data.comments);
                 }
@@ -64,6 +67,7 @@ class Comment extends Component {
         const token = isAuthenticated().token;
         const userId = isAuthenticated().user._id;
         const postId = this.props.postId;
+        this.setState({loading: true});
         uncomment(userId, token, postId, comment)
         .then(data => {
             if (data.error)
@@ -74,6 +78,8 @@ class Comment extends Component {
             {
                 // dispatch fresh list of comments to parent component (SinglePost)
                 this.props.updateComments(data.comments);
+                this.setState({loading: false});
+
             }
         });
     }
@@ -89,7 +95,7 @@ class Comment extends Component {
 
     render() {
 
-        const {comments} = this.props;
+        const {comments, loading} = this.props;
         comments.reverse();
         const {error} = this.state;
 
@@ -111,6 +117,11 @@ class Comment extends Component {
                         </div>
                     </form>
 
+                    {loading && (
+                        <div className="jumbotron text-center"><h2>Loading...</h2> </div>
+                    )
+                    }
+            
                     {
                         comments.map((comment, i) => {
                             const posterProfile = comment.postedBy ? `/user/${comment.postedBy._id}` : "/user/";
