@@ -131,7 +131,7 @@ class Posts extends Component {
         return (
             <div className="row">
             {   posts.map((post , i) => {
-                    const posterId = post.postedBy ? `/user/${post.postedBy._id}` : "";
+                    const posterId = post.postedBy ? `/user/${post.postedBy._id}` : "/user/";
                     const posterName = post.postedBy ? post.postedBy.name : " Unknown";
 
                     return (
