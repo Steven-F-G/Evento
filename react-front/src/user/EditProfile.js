@@ -69,7 +69,7 @@ class EditProfile extends Component {
         }
 
         this.userData.set(name, value);
-        this.setState({ [name]: value, fileSize, error: "" });
+        this.setState({ [name]: value, error: "" });
     };
 
 
