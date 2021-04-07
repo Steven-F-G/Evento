@@ -113,7 +113,7 @@ class Comment extends Component {
 
                     {
                         comments.map((comment, i) => {
-                            const posterProfile = comment.postedBy ? `/user/${comment.postedBy._id}` : "";
+                            const posterProfile = comment.postedBy ? `/user/${comment.postedBy._id}` : "/user/";
                             const posterName = comment.postedBy ? comment.postedBy.name : " Unknown";
                             const posterId = comment.postedBy ? `${comment.postedBy._id}` : "";
                             
