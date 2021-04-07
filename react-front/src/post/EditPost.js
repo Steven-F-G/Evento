@@ -73,7 +73,7 @@ class EditPost extends Component {
             this.setState({fileSize});     
         }
         this.postData.set(name, value);
-        this.setState({ [name]: value, fileSize, error: "" });
+        this.setState({ [name]: value, error: "" });
     };
 
 
