@@ -36,7 +36,7 @@ class ResetPassword extends Component {
                 this.setState({ error: data.error });
             } else {
                 console.log(data.message);
-                this.setState({ message: data.message, newPassword: "" });
+                this.setState({ message: data.message, newPassword: "", rePassword: "" });
             }
         });
     };
