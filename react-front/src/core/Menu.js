@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from '../auth';
+import DefaultProfile from '../images/avatar.png';
 
 const isActive = (history, path) => {
     if (history.location.pathname === path)
@@ -64,10 +65,19 @@ const Menu = ({history}) => (
                         
                     </li>
 
-                    <li className="nav-item">
+                    <li className="nav-item mt-2" style={{paddingLeft: "63%"}}>
                         
                         <Link className="nav-link" to={`/user/${isAuthenticated().user._id}`} style={(isActive(history, `/user/${isAuthenticated().user._id}` ))}>
-                        <i className="fa fa-user fa-2x text-light" style={{padding: '10px', borderRadius:"50%"}} />
+                            <img 
+                                className="float-left mr-2" 
+                                style={{height: "40px", width: "40px", borderRadius: "50%"}}
+                                src={`${process.env.REACT_APP_API_URL}/user/photo/${isAuthenticated().user._id}`} 
+                                alt={isAuthenticated().user.name} 
+                                onError={i => (i.target.src = `${DefaultProfile}`)}  
+                            />                        
+                            <label className="lead text-light mt-2">{isAuthenticated().user.name}</label>
+
+
                         </Link>
                         
                     </li>
