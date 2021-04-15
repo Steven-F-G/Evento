@@ -23,7 +23,7 @@ import UnknownProfile from "./user/UnknownProfile";
 const MainRouter = () => {
 
     const isDesktopOrLaptop = useMediaQuery({
-        query: '(min-device-width: 700px)'
+        query: '(min-device-width: 1460px)'
     })
 
     return ( 
