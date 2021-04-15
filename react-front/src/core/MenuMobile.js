@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from '../auth';
+import DefaultProfile from '../images/avatar.png';
 
 const isActive = (history, path) => {
     if (history.location.pathname === path)
@@ -17,7 +18,25 @@ const HamburgerMenu = ({history}) => (
 
     <nav className="navbar navbar-light"  style={{ backgroundColor: "#116466"}}>
 
-        <a className="lead text-light ml-2" href="/">Evento</a>
+        { isAuthenticated() ? (
+            <>
+             <Link className="" to={`/user/${isAuthenticated().user._id}`} style={(isActive(history, `/user/${isAuthenticated().user._id}` ))}>
+            <img 
+                className="float-left mr-2" 
+                style={{height: "40px", width: "40px", borderRadius: "50%"}}
+                src={`${process.env.REACT_APP_API_URL}/user/photo/${isAuthenticated().user._id}`} 
+                alt={isAuthenticated().user.name} 
+                onError={i => (i.target.src = `${DefaultProfile}`)}  
+            />                        
+            <label className="float-left lead text-light mt-2">{isAuthenticated().user.name}</label>
+            </Link>
+            </>
+        )
+        :
+        (
+            <a className="lead text-light ml-2" href="/">Evento</a>
+        )
+        }
 
         <button className="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
         aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span className="dark-blue-text"><i
