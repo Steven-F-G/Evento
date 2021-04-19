@@ -169,7 +169,7 @@ export default class Signup extends Component {
                     </h4>
                 </center>
 
-                <br />
+                <br /><br /><br /><br /><br /><br />
             </div>
         )
     }
