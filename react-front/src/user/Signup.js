@@ -159,6 +159,17 @@ export default class Signup extends Component {
                 {this.signupForm(name, email, password, repassword)}
             
                 <br />
+
+                <center>
+                    <h4 className="text-muted"> OR </h4>
+                    <br />
+                    <h4><Link className="nav-link" to="/signin">
+                        Sign Up with Google
+                    </Link>
+                    </h4>
+                </center>
+
+                <br />
             </div>
         )
     }
