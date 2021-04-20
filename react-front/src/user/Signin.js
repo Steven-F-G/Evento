@@ -199,9 +199,8 @@ export default class Signin extends Component {
                 { this.state.showTags && this.tagsForm()}
 
 
-                <br />
-                <br />
-                <br />
+                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
             </div>
         )
     }

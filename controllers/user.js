@@ -187,34 +187,35 @@ exports.removeFollower = (req, res) => {
 exports.findPeople = (req, res, next) => {
     console.log("FIND PEOPLE ENTERED");
     let following = req.profile.following;
-    following.push(req.profile._id);
-    
-    console.log(typeof following[0]._id);
-    console.log(typeof req.recommendedUsers[0]._id);
-    let recommendedUsers = req.recommendedUsers;
+    const loggedIn = {id: req.profile._id, name: req.profile.name};
+    console.log(loggedIn);
+    following.push(loggedIn);
 
-    recommendedUsers.map((ruser, rindex) => {
-        following.map((fuser, findex) => {
+    console.log("following: \n", following);
+    let recommendedUsers = req.recommendedUsers;
+    let rlength = recommendedUsers.length;
+    let flength = following.length;
+
+    for (rindex = 0; rindex < rlength; rindex++)
+    {
+        let ruser = recommendedUsers[rindex];
+        // console.log("ruser ", ruser.name);
+        for (findex = 0; findex < flength; findex++)
+        {
+            let fuser = following[findex];
             if (JSON.stringify(ruser._id) === JSON.stringify(fuser._id))
             {
-                recommendedUsers.splice(rindex);
+                //console.log("fuser ", fuser.name);
+                removedUser = recommendedUsers.splice(rindex, 1);
+                rindex--;
+                rlength--;
             }
-        })
-    })
-
+        }
+       // console.log("after ", rindex, recommendedUsers);
+    }
     console.log(recommendedUsers);
 
     return res.json(recommendedUsers);
-    // next();
-    
-    // User.find({_id: {$nin: following}}, (err, users) => {
-    //     if (err)
-    //     {
-    //         return res.status(400).json({error: err})
-    //     }
-    //     console.log(users);
-    //     res.json(users);
-    // }).select("_id name");
 }
 
 
@@ -232,7 +233,6 @@ exports.cluster = (req, res, next) => {
             });
         };
         const allUsers = users;
-        //console.log(allUsers);
     })
     .select("_id name tags")
     .then( (allUsers) => {
@@ -241,14 +241,11 @@ exports.cluster = (req, res, next) => {
         {
             vectors[i] = allUsers[i]['tags'];
         }
-        // for (let i = 0 ; i < allUsers.length ; i++) 
-        // {
-        //     console.log(i + ":  " + allUsers[i]['name']);
-        // }
+        
         console.log("Vectors array: ", vectors);
         console.log("\n\n");
         
-        kmeans.clusterize(vectors, {k: 3}, (err,res) => 
+        kmeans.clusterize(vectors, {k: 4}, (err,res) => 
         {
             if (err) 
             {
@@ -256,12 +253,9 @@ exports.cluster = (req, res, next) => {
             }
             else
             {
-                // console.log('%o',res);
                 for ( index = 0; index < res.length; index++ )
                 {
                     var cluster = res[index]; 
-                    // console.log(cluster.clusterInd);
-                    // console.log(allUsers[cluster.clusterInd[0]]['name']);
 
                     console.log("Cluster " + index + ":  ");
 
@@ -278,9 +272,6 @@ exports.cluster = (req, res, next) => {
                     }
                     for (let j = 0; j < cluster.clusterInd.length; j++)
                     {
-                        console.log(allUsers[cluster.clusterInd[j]]['_id'], req.profile._id);
-                        console.log(typeof allUsers[cluster.clusterInd[j]]['_id'])
-                        console.log(typeof req.profile._id);
                         if ( JSON.stringify(allUsers[cluster.clusterInd[j]]['_id']) === JSON.stringify(req.profile._id))
                         {
                             console.log("Correct Cluster is " + index + ": \n\t\t");
@@ -297,14 +288,11 @@ exports.cluster = (req, res, next) => {
                 }
                 for (let j = 0, k = 0; j < correct_cluster.length; j++)
                 {
-                    
-
                     if ( !(JSON.stringify(allUsers[cluster.clusterInd[j]]['_id']) === JSON.stringify(req.profile._id)))
                     {
                         recommendedUsers[k] =  { "_id": allUsers[correct_cluster[j]]['_id'], "name": (allUsers[correct_cluster[j]]['name']) };
                         k++;
                     }
-
                 }
                 console.log("Recommdended users: \n\t\t");
                 console.log(recommendedUsers);
@@ -316,7 +304,6 @@ exports.cluster = (req, res, next) => {
     })
 
 }
-
 
 exports.test = () =>
 {
@@ -402,7 +389,14 @@ exports.unattend = (req, res) => {
 
 exports.getPostAttend = (req, res) => {
     User.findById(req.profile._id)
-    .populate('attending', '_id title body postedBy created photo tags')
+    .populate('attending', '_id title body created photo tags')
+    .populate({
+        path: "attending",
+        populate: {
+           path: "postedBy",
+           select: '_id name'
+        }
+     })
     .exec((err, user) => {
         // error handling
         if (err || !user) {
@@ -410,6 +404,8 @@ exports.getPostAttend = (req, res) => {
                 error: "User not found"
             });
         };
+        console.log(user.attending[0].postedBy);
         return res.json(user.attending);
     })
+    
 };

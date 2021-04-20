@@ -6,7 +6,7 @@ import DefaultProfile from '../images/evento_logo_white.png';
 
 const Home = () => (
     <div style={{fontFamily: "-moz-initial", backgroundColor:"#dce1e3"}}>
-        <div className="jumbotron" style={{  backgroundColor: "#2f7f80", color: "#ffffff", fontFamily: "-moz-initial" ,borderRadius: "0px"}}>
+        <div className="jumbotron" style={{  backgroundColor: "#2f7f80", color: "#ffffff", fontFamily: "-moz-initial" ,borderRadius: "0px", width: "100%"}}>
             
                 <center>
 

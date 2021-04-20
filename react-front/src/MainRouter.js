@@ -5,6 +5,7 @@ import { useMediaQuery } from 'react-responsive';
 import Home from './core/Home';
 import Menu from './core/Menu';
 import MenuMobile from './core/MenuMobile';
+import Footer from './core/Footer';
 import Signup from './user/Signup';
 import Signin from './user/Signin';
 import Profile from './user/Profile';
@@ -23,7 +24,7 @@ import UnknownProfile from "./user/UnknownProfile";
 const MainRouter = () => {
 
     const isDesktopOrLaptop = useMediaQuery({
-        query: '(min-device-width: 1460px)'
+        query: '(min-device-width: 900px)'
     })
 
     return ( 
@@ -47,6 +48,9 @@ const MainRouter = () => {
                     <PrivateRoute exact path="/post/edit/:postId" component={EditPost} />
                     <PrivateRoute exact path="/user/Attending/:userId" component={AttendPost} />
                 </Switch>
+        
+                <Footer />
+
         </div>
     )
 };

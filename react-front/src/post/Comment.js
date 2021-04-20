@@ -146,7 +146,7 @@ class Comment extends Component {
                                         <p className="font-italic mark bg-light">
                                             Posted By: <Link to={`${posterProfile}`}>{posterName}{" "}</Link>
                                             on {new Date(comment.created).toDateString()}
-                                            {console.log(isAuthenticated().user._id, " ", posterId)};
+                                            {console.log(isAuthenticated().user._id, " ", posterId)}
                                             <span>
                                                 {
                                                     isAuthenticated().user && isAuthenticated().user._id === posterId && 
